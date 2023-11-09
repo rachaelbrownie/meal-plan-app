@@ -1,19 +1,17 @@
 import styled from "@emotion/styled";
-import { ProdControlPlaneIcon } from "@mirantis/mds-icon";
-import { Grid } from "@mirantis/mds-grid";
 
 const StyledHeader = styled.header`
   flex: 1;
-  color: ${({ theme }) => theme.color.text.header1};
 `;
 
-const Logo = styled.div`
-  color: white;
+const Logo = styled.h1`
   font-size: 20px;
   font-family: "Open Sans", Roboto, sans-serif;
   display: flex;
   alignitems: center;
   gap: 8px;
+  margin: 0;
+  padding: 0;
 `;
 
 export const Header = () => (
@@ -27,10 +25,8 @@ export const Header = () => (
         alignItems: "center",
       }}
     >
-      <Logo>
-        <ProdControlPlaneIcon color="white" /> Mirantis Kubernetes Engine
-      </Logo>
-      <div>user</div>
+      <Logo>Epic meal planner</Logo>
+      <div>menu icon</div>
     </div>
   </StyledHeader>
 );
