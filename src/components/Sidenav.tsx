@@ -18,13 +18,12 @@ const Menu = styled.nav`
 const Sidenav = function () {
   return (
     <Menu>
-      <Link to="page/account">My account</Link>
-      <Link to="page/fridge">Fridge</Link>
-      <Link to="page/saved">Meal plans</Link>
-      <Link to="page/new">New meal plan</Link>
+      <Link to="new">New meal plan</Link>
+      <Link to="saved">Meal plans</Link>
+      <Link to="fridge">Fridge</Link>
+      <Link to="account">My account</Link>
     </Menu>
   );
 };
 
 export { Sidenav };
-1;

@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
-  "version": "4.0.0",
-  "description": "Mirantis Kubernetes Engine UI",
+  "name": "meal-plan-app",
+  "version": "0.0.1",
+  "description": "Recipe App",
   "scripts": {
     "build": "webpack-cli",
     "start": "webpack serve --mode development"
