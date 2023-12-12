@@ -1,12 +1,36 @@
-import { Form } from "react-router-dom";
+// rrd imports 
+import { Form, useFetcher } from "react-router-dom";
+
+// react imports
+import { useEffect, useRef } from "react";
+
 
 export const New = () => {
+  const fetcher = useFetcher();
+  const isSubmitting = fetcher.state === "submitting";
+
+  const formRef = useRef();
+  const focusRef = useRef();
+
+ /* useEffect(() => {
+    if (!isSubmitting) {
+      // clear form
+      formRef.current.reset();
+
+      // reset form
+      focusRef.current.focus()
+    }
+  })*/
+
   return (
     <div>
       <h2>
         New Meal Plan
       </h2>
-      <Form replace >
+      <fetcher.Form
+        method="post"
+        ref={formRef}
+      >
         <label htmlFor="dietaryType"><h3>Do you follow a specific diet?</h3></label><br />
         <input type="radio" name="dietaryType" id="vegetarian" value="vegetarian" />
         <label htmlFor="vegetarian">Vegetarian</label><br />
@@ -67,7 +91,7 @@ export const New = () => {
 
         <input type="submit" value="Submit" onClick={submitForm} />
 
-      </Form>
+      </fetcher.Form>
     </div>
 
   );
