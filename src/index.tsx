@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       {
         path: "account",
         action: accountAction,
-        loader: accountLoader,
+            loader: accountLoader,
         element: <Account />,
         errorElement: <ErrorPage />,
         children: [
