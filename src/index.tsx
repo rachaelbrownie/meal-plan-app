@@ -5,7 +5,7 @@ import { Root } from "./routes/root";
 import { New } from "./routes/new";
 import { Fridge } from "./routes/fridge";
 import { Saved } from "./routes/saved";
-import { Account, accountAction } from "./routes/account";
+import { Account, accountAction, accountLoader } from "./routes/account";
 import { ErrorPage } from "./error";
 import { NewAccount } from "./routes/newUser";
 
@@ -32,6 +32,8 @@ const router = createBrowserRouter([
       },
       {
         path: "account",
+        action: accountAction,
+        loader: accountLoader,
         element: <Account />,
         errorElement: <ErrorPage />,
         children: [

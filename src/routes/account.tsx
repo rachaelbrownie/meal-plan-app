@@ -10,8 +10,13 @@ import { waait, fetchData } from "../helpers";
 // components
 import { NewAccount } from "./newUser";
 
+// types
+type userData = {
+  userName: string,
+};
+
 // loader
-export function accountLoader() {
+export function accountLoader(): userData {
   const userName = fetchData("userName");
   return { userName }
 }
@@ -35,7 +40,8 @@ export async function accountAction({ request }) {
 
 // account component
 export const Account = () => {
-  const { userName } = accountLoader();
+  const { userName } = useLoaderData() as userData;
+  console.log(userName)
 
   return (
     <>
