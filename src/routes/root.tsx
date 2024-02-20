@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Header } from "../components/Header";
 import { Sidenav } from "../components/Sidenav";
 
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: [col-start sidenav-start col-1] 1fr [col-2] 1fr [col-3 col-sixth-1 sidenav-end main-start] 1fr [col-4 col-fourth-1] 1fr [col-5 col-third-1 col-sixth-2] 1fr [col-6] 1fr [col-7 col-half col-fourth-2 col-sixth-3] 1fr [col-8] 1fr [col-9 col-third-2 col-sixth-4] 1fr [col-10 col-fourth-3] 1fr [col-11 col-sixth-5] 1fr [col-12] 1fr [col-13 main-end col-end];

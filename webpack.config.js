@@ -30,7 +30,7 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin({ inject: false })],
   devServer: {
-    port: 3000,
+    port: 9000,
     historyApiFallback: true,
   },
 };
