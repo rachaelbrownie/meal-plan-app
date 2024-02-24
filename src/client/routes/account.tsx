@@ -1,98 +1,139 @@
-// rrd imports 
-import { Form, useLoaderData } from "react-router-dom";
-
-// library imports
-import { UserPlusIcon } from "@heroicons/react/24/outline"
-
-// helper functions
-import { waait, fetchData } from "../helpers";
-
-// components
-import { NewAccount } from "./newUser";
-
-// types
-type userData = {
-  userName: string,
-};
-
-// loader
-export function accountLoader(): userData {
-  const userName = fetchData("userName");
-  return { userName }
-}
-
-//action
-export async function accountAction({ request }) {
-  await waait();
-
-  const data = await request.formData();
-  const { _action, ...values } = Object.fromEntries(data);
-
-  if (_action === "newUser") {
-    try {
-      localStorage.setItem("userName", JSON.stringify(values.userName))
-      return `Welcome ${values.userName}.`
-    } catch (e) {
-      throw new Error("There was a problem creating your account.")
-    }
-  }
-}
+import { UserPlusIcon } from "@heroicons/react/24/outline";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useRouteLoaderData,
+} from "react-router-dom";
+import { accountType } from "../types/account";
+import { ActionData } from "../types/actionData";
 
 // account component
 export const Account = () => {
-  const { userName } = useLoaderData() as userData;
-  console.log(userName)
+  const error = useActionData() as ActionData<typeof action>;
+  const { account } = useRouteLoaderData("root") as { account: accountType };
+  const { firstName, lastName, email, password } = account;
+  console.log(firstName);
 
   return (
-    <>
-      {userName ? (
-        <div className="">
+    <div>
+      <h1>Update your account preferences</h1>
+      <p>Knowing more about you makes meal planning easier.</p>
+      <Form method="post">
+        <label>
+          first name
+          <input type="text" value={firstName} />
+        </label>
+        <br />
+        <br />
+        <label>
+          last name
+          <input type="text" value={lastName} />
+        </label>
+        <br />
+        <br />
+        <label>
+          email
+          <input type="email" placeholder="name@name.com" value={email} />
+        </label>
+        <br />
+        <br />
+        <label>
+          password
+          <input type="password" value={password} />
+        </label>
+        <br />
+        <br />
+        <label>
+          Number of people in your meal plan
+          <input type="number" placeholder="1" min="1" />
+        </label>
+        <br />
+        <br />
+        <fieldset>
+          <legend>Cooking for children</legend>
           <div>
-            <h1>Tell Us More About <span className="accent">{userName}</span></h1>
-            <p>Knowing more about you makes meal planning easier.</p>
-            <Form method="post">
-              <label htmlFor="email">What's your email?</label><br />
-              <input type="email"
-                required
-                placeholder="name@name.com"
-                aria-label="Email" />
-              <br /><br />
-              <label htmlFor="familyMembers">How many people is this meal plan for?</label><br />
-              <input type="number"
-                required
-                placeholder="1"
-                min="1"
-                aria-label="How many family members?" />
-              <br /><br />
-              <label htmlFor="children">Are you cooking for children?</label><br />
-              <input type="checkbox" />
-              <label htmlFor="yes">Yes</label>
-              <input type="checkbox" />
-              <label htmlFor="no">No</label>
-              <br /><br />
-              <label htmlFor="dietaryType">Do you follow a specific diet?</label><br />
-              <input type="radio" name="dietaryType" id="vegetarian" value="vegetarian" />
-              <label htmlFor="vegetarian">Vegetarian</label><br />
-              <input type="radio" name="dietaryType" id="paleo" value="paleo" />
-              <label htmlFor="paleo">Paleo</label><br />
-              <input type="radio" name="dietaryType" id="pescatarian" value="pescatarian" />
-              <label htmlFor="pescatarian">Pescatarian</label><br />
-              <input type="radio" name="dietaryType" id="keto" value="keto" />
-              <label htmlFor="keto">Keto</label><br />
-              <input type="radio" name="lowFat" id="lowFat" />
-              <label htmlFor="lowFat">Low Fat</label>< br />
-              <input type="radio" name="none" id="none" />
-              <label htmlFor="none">None</label>
-              <br /><br />
-              <input type="hidden" name="_action" value="accountUpdate" />
-              <button type="submit">
-                <span>Update Account</span>
-                <UserPlusIcon width={20} />
-              </button>
-            </Form>
+            <label>
+              <input type="radio" name="hasChildren" value="yes" checked />
+              yes
+            </label>
           </div>
-        </div>
-      ) : <NewAccount />}
-    </>
+          <div>
+            <label>
+              <input type="radio" name="hasChildren" value="no" />
+              no
+            </label>
+          </div>
+        </fieldset>
+        <br />
+        <br />
+        <br />
+        <fieldset>
+          <legend>Diet plan</legend>
+          <div>
+            <label>
+              <input type="radio" name="dietaryType" value="none" />
+              none
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="dietaryType"
+                value="vegetarian"
+                checked
+              />
+              vegetarian
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="dietaryType" value="paleo" />
+              paleo
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="dietaryType" value="pescatarian" />
+              pescatarian
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="dietaryType" value="keto" />
+              keto
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="dietaryType" value="lowFat" />
+              low fat
+            </label>
+          </div>
+        </fieldset>
+        <span style={{ color: "red" }}>{error ? <p>{error}</p> : null}</span>
+        <button type="submit">
+          <span>Update Account</span>
+          <UserPlusIcon width={20} />
+        </button>
+      </Form>
+    </div>
   );
 };
+
+//action
+export async function action({ request }) {
+  const data = await request.formData();
+  // check that all required fields are filled
+
+  if (data) {
+    try {
+      return "Account update has not been implemented yet!";
+      // update the account
+    } catch (error) {
+      return error.message ? error.message : "unknown error!";
+      // return an errors
+    }
+  }
+}

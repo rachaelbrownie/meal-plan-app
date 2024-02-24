@@ -1,1 +1,16 @@
-[{"id":1,"firstName":"Rachael","lastName":"Brown","email":"roachedezigne@gmail.com","password":"password"},{"firstName":"Stevn","lastName":"MC","email":"asdf@example.com","password":"dog"},{"firstName":"hello","lastName":"me","email":"asdfasdf@asdf.com","password":"cat"}]
+[
+  {
+    "id": "1",
+    "firstName": "Rachael",
+    "lastName": "Brown",
+    "email": "roachedezigne@gmail.com",
+    "password": "password"
+  },
+  {
+    "firstName": "Jason",
+    "lastName": "Mamoa",
+    "email": "jason@gmail.com",
+    "password": "test",
+    "id": "2"
+  }
+]

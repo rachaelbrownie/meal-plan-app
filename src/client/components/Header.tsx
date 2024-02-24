@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 
 const StyledHeader = styled.header`
   flex: 1;
@@ -14,19 +15,23 @@ const Logo = styled.h1`
   padding: 0;
 `;
 
-export const Header = () => (
-  <StyledHeader>
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr max-content",
-        gap: "16px",
-        margin: "0 16px",
-        alignItems: "center",
-      }}
-    >
-      <Logo>Epic meal planner</Logo>
-      <div>menu icon</div>
-    </div>
-  </StyledHeader>
-);
+export const Header = () => {
+  return (
+    <StyledHeader>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr max-content",
+          gap: "16px",
+          margin: "0 16px",
+          alignItems: "center",
+        }}
+      >
+        <Logo>Epic meal planner</Logo>
+        <div>
+          <Bars3Icon style={{ width: "24px" }} />
+        </div>
+      </div>
+    </StyledHeader>
+  );
+};
