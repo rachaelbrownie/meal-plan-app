@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
+import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Sidenav } from "../components/Sidenav";
-
+import { accountType } from "../types/account";
 
 const Grid = styled.div`
   display: grid;
@@ -27,14 +27,17 @@ const Grid = styled.div`
   height: 100%;
 `;
 
+const GridAreaMain = styled.div`
+  padding: 16px 32px;
+  grid-column: 3/-1;
+`;
+
 const Cell = styled.div(({ style }) => {
   let backgroundColor;
   if (style.gridArea === "header") {
     backgroundColor = "#a8ccff";
   } else if (style.gridArea === "sidenav") {
     backgroundColor = "#fad5ff";
-  } else if (style.gridArea === "main") {
-    backgroundColor = "#ffffa5";
   }
 
   return {
@@ -58,9 +61,20 @@ export const Root = () => {
       <Cell style={{ gridArea: "sidenav" }}>
         <Sidenav />
       </Cell>
-      <Cell style={{ gridArea: "main" }}>
+      <GridAreaMain>
         <Outlet />
-      </Cell>
+      </GridAreaMain>
     </Grid>
   );
+};
+
+export const loader = async () => {
+  const accountId = localStorage.getItem("sessionToken");
+  const response = await fetch("/api/data/accounts");
+  const accounts = await response.json();
+
+  const account: accountType = accounts.find(
+    (account) => account.id === accountId,
+  );
+  return { account };
 };

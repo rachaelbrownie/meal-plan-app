@@ -1,23 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Root } from "./routes/root";
-import { New } from "./routes/new";
-import { Fridge } from "./routes/fridge";
-import { Saved } from "./routes/saved";
-import { Account, accountAction, accountLoader } from "./routes/account";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ErrorPage } from "./error";
-import { NewAccount } from "./routes/newUser";
+import { Account, action as accountAction } from "./routes/account";
+import { Fridge } from "./routes/fridge";
+import { Home } from "./routes/home";
+import { New, action as newAction } from "./routes/new";
+import { Root, loader as rootLoader } from "./routes/root";
+import { Saved } from "./routes/saved";
+import Signup, {
+  action as SignupAction,
+  loader as SignupLoader,
+} from "./routes/signup";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Signup />,
+    errorElement: <ErrorPage />,
+    loader: SignupLoader,
+    action: SignupAction,
+  },
+  {
+    path: "/grocery",
     element: <Root />,
+    id: "root",
+    loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "home",
+        element: <Home />,
+        errorElement: <ErrorPage />,
+      },
+      {
         path: "new",
         element: <New />,
+        action: newAction,
         errorElement: <ErrorPage />,
       },
       {
@@ -32,17 +51,9 @@ const router = createBrowserRouter([
       },
       {
         path: "account",
-        action: accountAction,
-            loader: accountLoader,
         element: <Account />,
+        action: accountAction,
         errorElement: <ErrorPage />,
-        children: [
-          {
-            path: "newUser",
-            element: <NewAccount />,
-            errorElement: <ErrorPage />
-          }
-        ]
       },
     ],
   },

@@ -1,9 +1,16 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const nodeExternals = require("webpack-node-externals");
 
-module.exports = {
+module.exports = (env) => ({
   mode: "development",
-  entry: "./src/index.tsx",
+  target: env.TARGET === "SERVER" ? "node" : undefined,
+  entry:
+    env.TARGET === "SERVER"
+      ? "./src/server/index.ts"
+      : "./src/client/index.tsx",
   output: {
+    path:
+      env.TARGET === "SERVER" ? __dirname + "/dist" : __dirname + "./public",
     filename: "index.js",
     publicPath: "/",
   },
@@ -21,16 +28,27 @@ module.exports = {
             presets: [
               ["@babel/preset-env", { targets: "defaults" }],
               "@babel/preset-typescript",
-              ["@babel/preset-react", { runtime: "automatic" }],
+              ...(env.TARGET === "SERVER"
+                ? []
+                : [["@babel/preset-react", { runtime: "automatic" }]]),
             ],
           },
         },
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ inject: false })],
+  externals: env.TARGET === "SERVER" ? [nodeExternals()] : [],
+  plugins:
+    env.TARGET === "SERVER"
+      ? []
+      : [
+          new HtmlWebpackPlugin({
+            inject: false,
+            template: "./src/client/index.ejs",
+          }),
+        ],
   devServer: {
-    port: 9000,
+    port: 9001,
     historyApiFallback: true,
   },
-};
+});

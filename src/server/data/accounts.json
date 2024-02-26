@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "firstName": "Rachael",
+    "lastName": "Brown",
+    "email": "roachedezigne@gmail.com",
+    "password": "password"
+  },
+  {
+    "firstName": "Jason",
+    "lastName": "Mamoa",
+    "email": "jason@gmail.com",
+    "password": "test",
+    "id": "2"
+  }
+]
